@@ -1,3 +1,5 @@
+//Author: Adam Lambert (C00257510)
+
 #include "Semaphore.h"
 #include <iostream>
 #include <thread>

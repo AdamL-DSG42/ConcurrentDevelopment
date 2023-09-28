@@ -1,11 +1,15 @@
+//Author: Adam Lambert (C00257510)
+
 #include "Semaphore.h"
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <mutex>
 
 
 static const int num_threads = 100;
 int sharedVariable=0;
+std::mutex mLock;
 
 
 /*! \fn updateTask
@@ -20,7 +24,11 @@ void updateTask(std::shared_ptr<Semaphore> firstSem, int numUpdates){
  
   for(int i=0;i<numUpdates;i++){
     //UPDATE SHARED VARIABLE HERE!
+    //Use mutex lock to make thread hold sharedVariable
+    mLock.lock();
     sharedVariable++;
+    //Release mutex lock on sharedVariable
+    mLock.unlock();
   }
 
 }

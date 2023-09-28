@@ -1,0 +1,4 @@
+# Author: Adam Lambert (C00257510)
+
+MUTUALEX: mutualEx.cpp
+	  g++ -Wall mutualEx.cpp Semaphore.cpp -o mutualEx
