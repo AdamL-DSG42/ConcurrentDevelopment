@@ -1,10 +1,10 @@
-Author:
+# Author:
 Adam Lambert
 
-Description:
+# Description:
 Completed version of Lab Two with implementation of a barrier and a mutex lock to create a rendezvous.
 
-Files:
+# Files:
 MakeFile1 - Makefile for the rendezvous.cpp file
 rendezvous - Executable of rendezvous.cpp
 rendezvous.cpp - C++11 file demonstrating mutliple threads rendezvousing to print text in the correct order
