@@ -13,12 +13,13 @@ void task(std::shared_ptr<int> numArrived, std::shared_ptr<Semaphore> mutexSem,s
   //Add mutex lock to incrementation of numArrived to ensure correct incrementation of   variable
   mutexSem->Wait();
   *numArrived = *numArrived + 1;
-  mutexSem->Signal();
 
   //Signal when the last thread arrives at this if statement
   if (*numArrived == threadCount) {
     barrierSem->Signal();
   }
+  //Signal mutex when finished using threadCount
+  mutexSem->Signal();
   //Wait for signal from last thread and immediately signal the next thread 
   barrierSem->Wait();
   barrierSem->Signal();
