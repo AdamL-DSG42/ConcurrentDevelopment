@@ -1,10 +1,11 @@
-The README file is a text file that explains what a project is.
-It should contain information on
+Author:
+Adam Lambert
 
-1. Project Licence
-2. Authors of Project
-3. How to install project
-4. List of any required Libraries, platform issues, etc.
-5. TO DO section listing items that need to be completed (errors, missing features etc.)
-6. List of files and what they contain
-7. Any other relevent information
+Description:
+Completed version of Lab Two with implementation of a barrier and a mutex lock to create a rendezvous.
+
+Files:
+MakeFile1 - Makefile for the rendezvous.cpp file
+rendezvous - Executable of rendezvous.cpp
+rendezvous.cpp - C++11 file demonstrating mutliple threads rendezvousing to print text in the correct order
+Semaphore.cpp/Semaphore.h - C++11 implementation of Semaphores using features such as mutex locks and conditionals

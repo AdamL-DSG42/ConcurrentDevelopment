@@ -1,10 +1,15 @@
-The README file is a text file that explains what a project is.
-It should contain information on
+Author:
+Adam Lambert
 
-1. Project Licence
-2. Authors of Project
-3. How to install project
-4. List of any required Libraries, platform issues, etc.
-5. TO DO section listing items that need to be completed (errors, missing features etc.)
-6. List of files and what they contain
-7. Any other relevent information
+Description:
+Completed version of Lab One, demonstrating a simple use of semaphores to print two sentences in the correct order. Also demonstrates the use of a simple mutex lock to increment a shared variable consistently.
+
+Files:
+helloThreads - Executable of helloThreads.cpp
+helloThreads.cpp - Simple use of semaphores to ensure that two threads complete their tasks of printing a sentence in the correct order.
+Makefile - Simple makefile for use with helloThreads.cpp
+Makefile1/Makefile2/Makefile3 - Sample makefiles provided with lab
+MakefileMutualEx - Simple makefile for use with mutualEx.cpp
+mutualEx - Executable of mutualEx.cpp
+mutualEx.cpp - Simple use of a mutex lock to ensure that multiple threads increment a shared variable the correct amount of times
+Semaphore.cpp/Semaphore.h - C++11 implementation of semaphores using features such as mutex locks and conditionals
