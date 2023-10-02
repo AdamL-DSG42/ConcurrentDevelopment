@@ -22,12 +22,14 @@ int main(void){
 
   barrierObj->setCount(5);
 
-  for(int i=0; i < threadArray.size(); i++){
-    threadArray[i]=std::thread(task,barrierObj);
-  }
+  for(int i=0; i < 5; i++){
+    for(int i=0; i < threadArray.size(); i++){
+      threadArray[i]=std::thread(task,barrierObj);
+    }
 
-  for(int i = 0; i < threadArray.size(); i++){
-    threadArray[i].join();
+    for(int i = 0; i < threadArray.size(); i++){
+      threadArray[i].join();
+    }
   }
   
   return 0;

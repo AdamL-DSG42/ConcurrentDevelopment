@@ -14,10 +14,9 @@ private:
 
   int taskCount;
   int threadNum;
-  bool condition;
-  std::shared_ptr<Semaphore> mutex;
-  std::shared_ptr<Semaphore> barrier1;
-  std::shared_ptr<Semaphore> barrier2;
+  std::shared_ptr<Semaphore> mutexSem;
+  std::shared_ptr<Semaphore> barrierSem1;
+  std::shared_ptr<Semaphore> barrierSem2;
 
 
 public:

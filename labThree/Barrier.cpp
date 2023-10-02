@@ -9,22 +9,20 @@
 /*! Barrier constructor*/
 Barrier::Barrier(){
 
-  this->taskCount = 0;
+  taskCount = 0;
   threadNum = 0;
-  condition = false;
-  mutex=std::make_shared<Semaphore>(1);
-  barrier1=std::make_shared<Semaphore>(0);
-  barrier2=std::make_shared<Semaphore>(1);
+  mutexSem=std::make_shared<Semaphore>(1);
+  barrierSem1=std::make_shared<Semaphore>(0);
+  barrierSem2=std::make_shared<Semaphore>(1);
 }
 /*! Barrier with parameter constructor*/
 Barrier::Barrier(int taskCount){
-
+  
   this->taskCount = taskCount;
   threadNum = 0;
-  condition = false;
-  std::shared_ptr<Semaphore> mutex(new Semaphore(1));
-  std::shared_ptr<Semaphore> barrier1(new Semaphore(0));
-  std::shared_ptr<Semaphore> barrier2(new Semaphore(1));
+  std::shared_ptr<Semaphore> mutexSem(new Semaphore(1));
+  std::shared_ptr<Semaphore> barrierSem1(new Semaphore(0));
+  std::shared_ptr<Semaphore> barrierSem2(new Semaphore(1));
 }
 /*! Barrier deconstructor*/
 Barrier::~Barrier(){
@@ -45,27 +43,27 @@ int Barrier::getCount(){
 /*! waits for all the threads before starting second half of code*/ 
 void Barrier::waitForAll(){
 
-  mutex->Wait();
+  mutexSem->Wait();
   threadNum++;
 
   if(threadNum == taskCount){
-    barrier2->Wait();
-    barrier1->Signal();
+    barrierSem2->Wait();
+    barrierSem1->Signal();
     threadNum = 0;
   }
-  mutex->Signal();
-  barrier1->Wait();
-  barrier1->Signal();
+  mutexSem->Signal();
+  barrierSem1->Wait();
+  barrierSem1->Signal();
 
-  mutex->Wait();
+  mutexSem->Wait();
   threadNum++;
 
   if(threadNum == taskCount){
-    barrier1->Wait();
-    barrier2->Signal();
+    barrierSem1->Wait();
+    barrierSem2->Signal();
     threadNum = 0;
   }
-  mutex->Signal();
-  barrier2->Wait();
-  barrier2->Signal();
+  mutexSem->Signal();
+  barrierSem2->Wait();
+  barrierSem2->Signal();
 }
