@@ -24,7 +24,6 @@ public:
   Barrier();
   ~Barrier();
   Barrier(int count);
-  void setCount(int count);
   int getCount();
   void waitForAll();
 };
