@@ -45,7 +45,26 @@
 /* Code: */
 
 #include "Event.h"
+#include <iostream>
+#include <cstdlib>
 
+Event::Event(){
+
+  srand (time(NULL));
+  randNum = rand() % 26;
+  charVal = 'a' + randNum;
+
+}
+
+Event::~Event(){
+
+}
+
+void Event::Consume(){
+
+  std::cout << std::toupper(charVal) << std::endl;
+
+}
 
 
 /* Event.cpp ends here */

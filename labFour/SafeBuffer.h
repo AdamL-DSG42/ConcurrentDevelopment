@@ -45,6 +45,7 @@
 /* Code: */
 
 #include "Semaphore.h"
+#include "Event.h"
 #include <stdio.h>
 #include <queue>
 
@@ -57,7 +58,17 @@ private:
   std::shared_ptr<Semaphore> mutexSem;
   std::shared_ptr<Semaphore> itemsSem;
   std::shared_ptr<Semaphore> spacesSem;
+  std::shared_ptr<int> bufferSize;
+  int bufferLimit;
 
+public:
+
+  SafeBuffer();
+  ~SafeBuffer();
+  SafeBuffer(int size);
+  void Get();
+  void Put(int i);
+  
 };
 
 /* SafeBuffer.h ends here */

@@ -46,6 +46,46 @@
 
 #include "SafeBuffer.h"
 
+SafeBuffer::SafeBuffer(){
 
+  bufferLimit = 0;
+
+}
+
+SafeBuffer::~SafeBuffer(){
+
+}
+
+SafeBuffer::SafeBuffer(int size){
+
+  bufferLimit = size;
+  *bufferSize = 0;
+  
+}
+
+void SafeBuffer::Get(){
+
+  itemsSem->Wait();
+  mutexSem->Wait();
+  std::shared_ptr<Event> e= buffer.pop();
+  --*bufferSize;
+  mutexSem->Signal();
+  spacesSem->Signal();
+  e->Consume();
+
+}
+
+void SafeBuffer::Put(int i){
+
+  if (*bufferSize < bufferLimit) {
+    std::shared_ptr<Event> e= std::make_shared<Event>(i);
+    spacesSem->Wait();
+    mutexSem->Wait();
+    buffer.push(e);
+    ++bufferSize;
+    mutexSem->Signal();
+    itemsSem->Signal();
+  }
+}
 
 /* SafeBuffer.cpp ends here */

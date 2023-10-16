@@ -51,8 +51,18 @@ class Event
 {
 private:
 
-  // Basic Constructor - Assign char value (lowercase)
-  // Consume - cout uppercase val
+  char charVal;
+  int randNum;
 
+public:
+
+  Event();
+  ~Event();
+  void Consume();
+
+  // Basic Constructor - Assign char value (lowercase)
+  // Consume - cout uppercase val#
+
+};
 
 /* Event.h ends here */

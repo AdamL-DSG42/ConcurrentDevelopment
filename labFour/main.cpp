@@ -1,4 +1,3 @@
-#include "Barrier.h"
 #include "Event.h"
 #include "SafeBuffer.h"
 #include <iostream>
@@ -14,19 +13,13 @@ const int size=20;
     \brief Creates events and adds them to buffer
 */
 
-void producer(std::shared_ptr<SafeBuffer<std::shared_ptr<Event>> theBuffer, int numLoops){
+void producer(std::shared_ptr<SafeBuffer<std::shared_ptr Event>> theBuffer, int numLoops){
 
   for(int i=0;i<numLoops;++i){
     //Produce event and add to buffer
-    std::shared_ptr<Event> e= std::make_shared<Event>(i);
-    spacesSem->Wait();
-    mutexSem->Wait();
-    theBuffer.put(e);
-    mutexSem->Signal();
-    itemsSem->Signal();
+    theBuffer->Put(i);
   }
   
-
 }
 
 /*! \fn consumer
@@ -36,26 +29,19 @@ void producer(std::shared_ptr<SafeBuffer<std::shared_ptr<Event>> theBuffer, int 
 void consumer(std::shared_ptr<SafeBuffer<std::shared_ptr Event>> theBuffer, int numLoops){
 
   for(int i=0;i<numLoops;++i){
-    //Produce event and add to buffer
-    itemsSem->Wait();
-    mutexSem->Wait();
-    std::shared_ptr<Event> e= theBuffer->get();
-    mutexSem->Signal();
-    spacesSem->Signal();
-    e->consume();
+    theBuffer->Get();
   }
   
-
 }
 
 int main(void){
 
   std::vector<std::thread> vt(num_threads);
-  std::shared_ptr<SafeBuffer<std::shared_ptr<Event>> aBuffer( new Buffer<shared_ptr Event>(size));
+  std::shared_ptr<SafeBuffer<std::shared_ptr<Event>>> aBuffer( new SafeBuffer<shared_ptr<Event>>(size));
   /**< Launch the threads  */
   int i=0;
   for(std::thread& t: vt){
-    t=std::thread(updateTask,aBarrier,10);
+    t=std::thread(updateTask,aBuffer,10);
   }
   /**< Join the threads with the main thread */
   for (auto& v :vt){
