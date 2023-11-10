@@ -2,11 +2,11 @@
  * 
  * Filename: main.c
  * Description: 
- * Author: Joseph
+ * Author: Adam Lambert
  * Maintainer: 
- * Created: Wed Oct 11 09:28:12 2023 (+0100)
- * Last-Updated: Wed Oct 11 10:01:39 2023 (+0100)
- *           By: Joseph
+ * Created: Tue Oct 17
+ * Last-Updated: Wed Oct 17
+ *           By: Adam Lambert
  *     Update #: 13
  * 
  */
@@ -39,37 +39,42 @@
 #include <vector>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
-#include<unistd.h>
+#include <unistd.h>
 
 const int COUNT = 5;
 const int THINKTIME=3;
 const int EATTIME=5;
+std::shared_ptr<Semaphore> footman;
 std::vector<Semaphore> forks(COUNT);
 
 
 void think(int myID){
   int seconds=rand() % THINKTIME + 1;
-  std::cout << myID << " is thinking! "<<std::endl;
+  std::cout << myID << " is thinking! " << std::endl;
   sleep(seconds);
 }
 
 void get_forks(int philID){
+  footman->Wait();
   forks[philID].Wait();
   forks[(philID+1)%COUNT].Wait();
+  std::cout << philID << " holds forks! " << std::endl;
 }
 
 void put_forks(int philID){
   forks[philID].Signal();
-  forks[(philID+1)%COUNT].Signal();  
+  forks[(philID+1)%COUNT].Signal();
+  std::cout << philID << " releases forks! " << std::endl;
+  footman->Signal();
 }
 
 void eat(int myID){
   int seconds=rand() % EATTIME + 1;
-    std::cout << myID << " is chomping! "<<std::endl;
+  std::cout << myID << " is chomping! " << std::endl;
   sleep(seconds);  
 }
 
-void philosopher(int id/* other params here*/){
+void philosopher(int id){
   while(true){
     think(id);
     get_forks(id);
@@ -81,11 +86,15 @@ void philosopher(int id/* other params here*/){
 
 
 int main(void){
-  srand (time(NULL)); // initialize random seed: 
+  srand (time(nullptr)); // initialize random seed: 
   std::vector<std::thread> vt(COUNT);
+  for (int i = 0; i < COUNT; ++i){
+    forks[i].Signal();
+  }
+  footman = std::make_shared<Semaphore>(COUNT - 1);
   int id=0;
   for(std::thread& t: vt){
-    t=std::thread(philosopher,id++/*,params*/);
+    t=std::thread(philosopher,id++);
   }
   /**< Join the philosopher threads with the main thread */
   for (auto& v :vt){
