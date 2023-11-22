@@ -10,7 +10,7 @@
 /*! Shark constructor*/
 Shark::Shark(){
 
-  sharkPop = 0;
+  type = 2;
   sharkBreed = 0;
   sharkAge = 0;
   sharkEnergy = 0;
@@ -19,9 +19,9 @@ Shark::Shark(){
 }
 
 /*! Shark with parameter constructor*/
-Shark::Shark(int pop, int breed, int energy, int starve){
+Shark::Shark(int breed, int energy, int starve){
   
-  sharkPop = pop;
+  type = 2;
   sharkBreed = breed;
   sharkAge = 0;
   sharkEnergy = energy;
@@ -48,3 +48,8 @@ void Shark::reproduce(){
 void Shark::starve(){
 
 }
+
+int Shark::getType() const {
+  return type;
+}
+ 

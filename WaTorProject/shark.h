@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "gridTile.h"
 
 /*! \class Shark
     \brief Implementation of Shark
@@ -6,11 +6,10 @@
    Details the relevant attributes of the shark class for the Wa-Tor simulation
 
 */
-class Shark
+class Shark : public GridTile
 {
 private:
 
-  int sharkPop;
   int sharkBreed;
   int sharkAge;
   int sharkEnergy;
@@ -20,8 +19,9 @@ public:
 
   Shark();
   ~Shark();
-  Shark(int pop, int breed, int energy, int starve);
+  Shark(int breed, int energy, int starve);
   void move();
   void reproduce();
   void starve();
+  int getType() const override;
 };
