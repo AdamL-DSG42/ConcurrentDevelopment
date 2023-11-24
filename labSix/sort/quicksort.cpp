@@ -7,9 +7,9 @@
 // Created: Sat Feb  9 16:43:33 2019 (+0000)
 // Version: 
 // Package-Requires: ()
-// Last-Updated: Tue Feb 12 16:48:22 2019 (+0000)
-//           By: Joseph
-//     Update #: 103
+// Last-Updated: 24 Nov 2023
+//           By: Adam Lambert
+//     Update #: 104
 // URL: 
 // Doc URL: 
 // Keywords: 
@@ -43,6 +43,24 @@
 //
 // 
 
+/*! \mainpage Concurrency Lab Six Sort
+ *
+ * \section Description
+ *
+ * Completed version of Lab Six Sort.
+ *
+ * Demonstrates parallelised sorting on a quicksort algorithm
+ *
+ * \section p How to Run
+ *
+ *  quicksort.cpp:
+ *
+ *  Compiled using g++, run make -k to create
+ *
+ *  Run ./qsort.out to run the program
+ *
+ */
+
 // Code:
 
 #include <iostream>
@@ -55,10 +73,19 @@
 
 using namespace std ;
 
+/*! \file quicksort.cpp
+    \brief Demonstrates parallelised sorting on a quicksort algorithm
+*/
 
 const int LENGTH=2000;
 
-//template <typename T>
+/*! \fn int partition (vector<int>& myArray , int low , int high )
+    \brief Partition the supplied vector and return the location of the quicksort pivot point
+
+    \param myArray integer vector to be sorted
+    \param low location of first value in the vector
+    \param high location of last value in the vector
+*/
 int partition (vector<int>& myArray , int low , int high ){
   int pivot=myArray[high];
   int k=high;
@@ -77,7 +104,13 @@ int partition (vector<int>& myArray , int low , int high ){
   return i-1;
 }
   
-//template<typename T>
+/*! \fn int quicksort(vector<int>& myArray , int low , int high )
+    \brief Sort the supplied vector from lowest to highest
+
+    \param myArray integer vector to be sorted
+    \param low location of first value in the vector
+    \param high location of last value in the vector
+*/
 int quicksort(vector<int>& myArray , int low , int high ){
   if (low<high){
     int pivot=partition(myArray,low,high);
