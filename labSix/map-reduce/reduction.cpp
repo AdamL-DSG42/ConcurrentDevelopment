@@ -7,9 +7,9 @@
 // Created: Sat Feb 19 13:23:33 2019 (+0000)
 // Version: 
 // Package-Requires: ()
-// Last-Updated: Sun Oct 22 20:51:32 2023 (+0100)
-//           By: Joseph
-//     Update #: 106
+// Last-Updated: 24 Nov 2023
+//           By: Adam Lambert
+//     Update #: 107
 // URL: 
 // Doc URL: 
 // Keywords: 
@@ -43,6 +43,24 @@
 //
 // 
 
+/*! \mainpage Concurrency Lab Six Map-Reduce
+ *
+ * \section Description
+ *
+ * Completed version of Lab Six Map-Reduce.
+ *
+ * Demonstrates map-reduction by summing values in a serial way, a parallel way and a tiled parallel way
+ *
+ * \section p How to Run
+ *
+ *  reduction.cpp:
+ *
+ *  Compiled using g++, run make -k to create
+ *
+ *  Run ./reduce.out to run the program
+ *
+ */
+
 // Code:
 
 #include <iostream>
@@ -55,15 +73,20 @@
 #include <omp.h>
 using namespace std ;
 
+/*! \file reduction.cpp
+    \brief Demonstrates map-reduction by summing values in a serial way, a parallel way and a tiled parallel way
+*/
 
 const int LENGTH=2000;
 int NumThreads=1;
 
 
-///! Find out how many threads are running!
+/*! \fn int get_num_threads(void)
+    \brief get the number of threads created
+*/
 int get_num_threads(void) {
     int num_threads = 1;
-    //must ask in parallel region otherwise 1 is returned
+    /**< must ask in parallel region otherwise 1 is returned */
     #pragma omp parallel
     {
         #pragma omp single
@@ -72,6 +95,11 @@ int get_num_threads(void) {
     return num_threads;
 }
 
+/*! \fn float getSerialSum(vector<int> data)
+    \brief Get the sum of all values in a vector in a serial way
+
+    \param data An integer vector containing the values to be summed
+*/
 float getSerialSum(vector<int> data){
   float sum=0.0;
   for(auto& value:data){
@@ -80,6 +108,11 @@ float getSerialSum(vector<int> data){
   return sum;
 }
 
+/*! \fn float getParallelSum(vector<int> data)
+    \brief Get the sum of all values in a vector in a parallelised way
+
+    \param data An integer vector containing the values to be summed
+*/
 float getParallelSum(vector<int> data){
   float sum=0.0;
 #pragma omp parallel for reduction(+:sum)
@@ -89,7 +122,12 @@ float getParallelSum(vector<int> data){
   return sum;
 }
 
+/*! \fn float getTiledParallelsum(vector<int> data)
+    \brief Get the sum of all values in a vector in a parallelised way using tiling, 
+    printing the value summed by each tile
 
+    \param data An integer vector containing the values to be summed
+*/
 float getTiledParallelsum(vector<int> data){
   float result =0.0;
   NumThreads=get_num_threads();
