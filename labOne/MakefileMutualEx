@@ -1,4 +1,20 @@
 # Author: Adam Lambert (C00257510)
 
-MUTUALEX: mutualEx.cpp
-	  g++ -Wall mutualEx.cpp Semaphore.cpp -o mutualEx
+CC=g++
+CFLAGS=-std=c++11 -pthread -Wall
+CPPFILES=mutualEx.cpp Semaphore.cpp
+HFILES=Semaphore.h
+OBJFILES=mutualEx.o Semaphore.o
+EXE=mutualEx
+
+%.o: %.cpp
+	$(CC) -c -o $@ $< $(CFLAGS) $(DEBUGFLAGS)
+
+ALL: $(OBJFILES) $(HFILES)
+	$(CC) -o $(EXE) $(OBJFILES) $(CFLAGS) $(DEBUGFLAGS) 
+
+DEBUG: DEBUGFLAGS = -g -O0
+DEBUG: ALL
+
+CLEAN:
+	rm $(OBJFILES)
