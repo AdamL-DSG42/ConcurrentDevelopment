@@ -26,8 +26,9 @@ https://github.com/AdamL-DSG42/ConcurrentDevelopment/tree/main/labTwo
 ### Description:
 
 Completed version of Lab Two.
-Demonstrates a simple use of semaphores to print two sentences in the correct order. Use Makefile to create this program.
-Also demonstrates the use of a simple mutex lock to increment a shared variable consistently. Use MakefileMutualEx to create this program.
+
+Demonstrates the use of mutexs and semaphores to print the word first the specified amount of times 
+before printing the word second the specified amount of times.
 
 ### Files:
 
