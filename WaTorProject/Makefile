@@ -1,14 +1,14 @@
 # Adam Lambert
 
 CXX = g++
-CPPFILES=gridTile.cpp simulation.cpp
-HFILES=gridTile.h tileConstants.h
-OBJFILES=gridTile.o simulation.o
+CPPFILES=simulation.cpp
+HFILES=tileConstants.h
+OBJFILES=simulation.o
 CPPFLAGS=-std=c++11 -I. -Wall
-LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system -lgomp
+LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system -fopenmp
 EXE=watorSimulation
 
-SRCS=gridTile.cpp simulation.cpp
+SRCS=simulation.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 %.o: %.cpp

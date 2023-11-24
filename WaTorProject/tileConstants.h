@@ -28,11 +28,15 @@
 //
 // Code:
 
+/*! \file tileConstants.h
+    \brief Contains constant values used for testing purposes in the simulation.cpp file
+*/
+
 #pragma once
 
 // Define the size of the wa-tor grid and the window size 
-const int xdim = 50; 
-const int ydim = 50;
+const int xdim = 100; 
+const int ydim = 100;
 const int WindowXSize = 1600;
 const int WindowYSize = 1400;
 
@@ -40,3 +44,5 @@ const int WindowYSize = 1400;
 const int water = 0;
 const int fish = 1;
 const int shark = 2;
+
+const float chronon = 0.1f;

@@ -5,9 +5,9 @@
 // Author: Adam Lambert
 // Maintainer: Adam Lambert
 // Created: Mon Nov 13 2023
-// Last-Updated: Mon Nov 20 2023
+// Last-Updated: Mon Nov 24 2023
 //           By: Adam Lambert
-//     Update #: 2
+//     Update #: 5
 // 
 // 
 
@@ -25,8 +25,33 @@
 // You should have received a copy of the GNU General Public License
 // along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
 // 
+
+/*! \mainpage Wa-Tor Simulation Project
+ *
+ * \section Description
+ *
+ * In progress Wa-Tor Simulation
+ *
+ * Simulates an ecosystem of Fish and Sharks which each have different behaviours
+ *
+ * Displays the created ecosystem simulation and how it progresses using SFML
+ *
+ * \section p How to Run
+ *
+ *  simulation.cpp:
+ *
+ *  Compiled using g++, run make -k to create
+ *
+ *  Run ./watorSimulation to run the program
+ *
+ */
+
 //
 // Code:
+
+/*! \file simulation.cpp
+    \brief Simulation of an ecosystem of Fish and Sharks which each have different behaviours, displayed with SFML
+*/
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -36,14 +61,18 @@
 #include <vector>
 #include <tuple>
 #include <ctime>
-// #include "fish.h"
-// #include "shark.h"
+#include <omp.h>
 #include "tileConstants.h"
 
+/**< Create global variables of the simulation grids' size and each cells' size */
 const int gridSize = xdim*ydim;
 int cellXSize = WindowXSize/xdim;
 int cellYSize = WindowYSize/ydim;
 
+/*! \struct Tile
+    \brief Struct containing the required attributes of each grid tile, updated to contain fish, shark or 
+    water as required
+*/
 struct Tile {
   bool alreadyMoved = false;
   int breedTime = 0;
@@ -54,17 +83,30 @@ struct Tile {
   sf::Color creatureColour = sf::Color::Blue;
 };
 
+/**< Create global variables of the 2D worldData array that contains each Tile and the 2D watorArray array
+      that contains the visual representation of each of these tiles */
 sf::RectangleShape watorArray[xdim][ydim];
 Tile worldData[xdim][ydim];
 
-// Swap the value of two integers
+/*! \fn void swap(Tile &a, Tile &b)
+    \brief Function to swap the contents of two Tiles
+
+    \param a First Tile to be swapped
+    \param b Second Tile to be swapped
+*/
 void swap (Tile &a, Tile &b){ 
     Tile temp = a; 
     a = b; 
     b = temp; 
 } 
 
-// Randomly shuffle all of the tiles in the flattened 2D array
+/*! \fn void shuffle(Tile *arr, int rows, int cols)
+    \brief Function to shuffle all of the Tiles stored in the flattened worldData array
+
+    \param arr Flattened 2D worldData array
+    \param rows Number of rows in the 2D worldData array
+    \param cols Number of cols in the 2D worldData array
+*/
 void shuffle(Tile *arr, int rows, int cols){
   int totalSize = rows * cols;
 
@@ -74,6 +116,9 @@ void shuffle(Tile *arr, int rows, int cols){
   }
 }
 
+/*! \fn void moveReset()
+    \brief Function to resetthe move status of all Tiles in the worldData array
+*/
 void moveReset(){
   for(int i = 0; i < xdim; ++i){
     for(int k = 0; k < ydim; ++k){
@@ -82,7 +127,14 @@ void moveReset(){
   }
 }
 
-// Create a vector of all empty neighbours of a tile
+/*! \fn void getFishNeighbours(int row, int col, std::vector<std::pair<int, int>>& fishNeighbours)
+    \brief Function to find all of the neighbour Tiles of a current Tile that are of type fish
+    using a Von Neuman neighbourhood (North, South, East, West)
+
+    \param row Row position of the current Tile
+    \param col Column position of the current Tile
+    \param fishNeighbours A vector of pairs of coordinates of each neighbour of a Tile that are of type fish
+*/
 void getFishNeighbours(int row, int col, std::vector<std::pair<int, int>>& fishNeighbours){
   if(worldData[row][(((col + 1) % ydim) + ydim) % ydim].type == fish){
     fishNeighbours.push_back(std::make_pair(row, ((((col + 1) % ydim) + ydim) % ydim)));
@@ -98,7 +150,14 @@ void getFishNeighbours(int row, int col, std::vector<std::pair<int, int>>& fishN
   }
 }
 
-// Create a vector of all empty neighbours of a tile
+/*! \fn void getEmptyNeighbours(int row, int col, std::vector<std::pair<int, int>>& emptyNeighbours)
+    \brief Function to find all of the neighbour Tiles of a current Tile that are of type water
+    using a Von Neuman neighbourhood (North, South, East, West)
+
+    \param row Row position of the current Tile
+    \param col Column position of the current Tile
+    \param emptyNeighbours A vector of pairs of coordinates of each neighbour of a Tile that are of type water
+*/
 void getEmptyNeighbours(int row, int col, std::vector<std::pair<int, int>>& emptyNeighbours){
   if(worldData[row][(((col + 1) % ydim) + ydim) % ydim].type == water){
     emptyNeighbours.push_back(std::make_pair(row, ((((col + 1) % ydim) + ydim) % ydim)));
@@ -114,6 +173,12 @@ void getEmptyNeighbours(int row, int col, std::vector<std::pair<int, int>>& empt
   }
 }
 
+/*! \fn void fishUpdate(int row, int col)
+    \brief Function to update the state of a fish Tile for every chronon that passes
+
+    \param row Row position of the current Tile
+    \param col Column position of the current Tile
+*/
 void fishUpdate(int row, int col){
   std::vector<std::pair<int, int>> emptyNeighbours;
   getEmptyNeighbours(row, col, emptyNeighbours);
@@ -136,6 +201,12 @@ void fishUpdate(int row, int col){
   }
 }
 
+/*! \fn void sharkUpdate(int row, int col)
+    \brief Function to update the state of a shark Tile for every chronon that passes
+
+    \param row Row position of the current Tile
+    \param col Column position of the current Tile
+*/
 void sharkUpdate(int row, int col){
   if(worldData[row][col].starveTime == worldData[row][col].starveDeath){
     worldData[row][col].type = water;
@@ -188,8 +259,13 @@ void sharkUpdate(int row, int col){
   }
 }
 
-// Move creature to random adjacent tile
-void move(int row, int col){
+/*! \fn void updateTile(int row, int col)
+    \brief Function to update the state of a Tile based on the type of Tile 
+
+    \param row Row position of the current Tile
+    \param col Column position of the current Tile
+*/
+void updateTile(int row, int col){
   if (!worldData[row][col].alreadyMoved){
     if(worldData[row][col].type == fish){
       fishUpdate(row, col);
@@ -200,13 +276,38 @@ void move(int row, int col){
   }
 }
 
-int main(){
-  //std::cout << ""
-  int gridTotal = 0;
-  int fishPop = 100;
-  int sharkPop = 20;
+/*! \fn void updateGrid(sf::Clock clock)
+    \brief Function to update the worldData grid each chronon and update the visual simulation based on the
+    changes that occur
+*/
+void updateGrid(sf::Clock clock){
+  if(clock.getElapsedTime().asSeconds() >= chronon) {
+    for(int i = 0; i < xdim; ++i){
+      for(int k = 0; k < ydim; ++k){
+        if(worldData[i][k].type != water){
+          updateTile(i, k);
+        }
+      }
+    }
+    clock.restart();
+  }
 
-  // Populate grid with fish, shark and water tiles
+  moveReset();  
+
+  // Set colours of tiles to the appropriate colour based on whether it is a fish, shark or water
+  for(int i = 0; i < xdim; ++i){
+    for(int k = 0; k < ydim; ++k){
+      watorArray[i][k].setFillColor(worldData[i][k].creatureColour);
+    }
+  }
+}
+
+int main(){
+  int gridTotal = 0;
+  int fishPop = 3000;
+  int sharkPop = 300;
+
+  /**< Populate grid with fish, shark and water tiles */
   for(int i = 0; i < xdim; ++i){
     for(int k = 0; k < ydim; ++k){
       if(gridTotal < fishPop){
@@ -216,8 +317,8 @@ int main(){
       }
       else if(gridTotal < fishPop+sharkPop){
         worldData[i][k].type = shark;
-        worldData[i][k].breedOccur = 6;
-        worldData[i][k].starveDeath = 5;
+        worldData[i][k].breedOccur = 10;
+        worldData[i][k].starveDeath = 3;
         worldData[i][k].creatureColour = sf::Color::Red;
       }
       else {
@@ -228,12 +329,12 @@ int main(){
     }
   }
 
-  // Flatten the 2D array and shuffle all of the tiles to randomly place fish and sharks
+  /**< Flatten the 2D array and shuffle all of the tiles to randomly place fish and sharks */
   srand (time(NULL)); 
   Tile *oneDimArray = &worldData[0][0];
   shuffle(oneDimArray, xdim, ydim);
 
-  // Set colours of tiles to the appropriate colour based on whether it is a fish, shark or water
+  /**< Set colours of tiles to the appropriate colour based on whether it is a fish, shark or water */
   for(int i = 0; i < xdim; ++i){
     for(int k = 0; k < ydim; ++k){
       watorArray[i][k].setSize(sf::Vector2f(cellXSize,cellYSize));
@@ -254,12 +355,13 @@ int main(){
             window.close();
     }
 
-    float chronon = 0.1f;
+    //updateGrid();
+
     if(clock.getElapsedTime().asSeconds() >= chronon) {
       for(int i = 0; i < xdim; ++i){
         for(int k = 0; k < ydim; ++k){
           if(worldData[i][k].type != water){
-            move(i, k);
+            updateTile(i, k);
           }
         }
       }
@@ -268,7 +370,7 @@ int main(){
 
     moveReset();  
 
-    // Set colours of tiles to the appropriate colour based on whether it is a fish, shark or water
+    /**< Set colours of tiles to the appropriate colour based on whether it is a fish, shark or water */
     for(int i = 0; i < xdim; ++i){
       for(int k = 0; k < ydim; ++k){
         watorArray[i][k].setFillColor(worldData[i][k].creatureColour);
@@ -292,10 +394,27 @@ int main(){
 // simulation.cpp ends here
 
 /*
-  #pragma omp parallel
-  updateGrid(); // put task in function
-  int thread_id = get_thread_id;
-  int thread_count = get_thread_count;
+  Parallelisation to be implemented
 
-  for (){}
+  updateGrid(); // put task in function
+  1. Get thread count: int thread_count = get_thread_count;
+  2. Size of each grid: rows / total thread count, may not go evenly, give remainder to last grid
+  int thread_id = get_thread_id;
+
+  #pragma omp parallel
+  {
+    int threadCount = omp_get_thread_count();
+    int gridSize = row/threadCount;
+    int start = threadID * threadRowCount;
+    if(threadID == threadCount - 1){end = rowCount};
+    int end = start + threadRowCount;
+    for(int i = start; i < end; ++i) {
+      for(int k = 0; k < cols; ++k) {
+        updateGrid();
+      }
+    }
+
+    to deal with locks, three for loops, each one shares locks.
+    Lock adjacent tiles.
+  }
 */
