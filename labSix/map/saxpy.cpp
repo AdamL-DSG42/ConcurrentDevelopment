@@ -7,9 +7,9 @@
 // Created: Fri Feb  1 10:12:18 2019 (+0000)
 // Version: 
 // Package-Requires: ()
-// Last-Updated: Mon Feb  4 09:50:59 2019 (+0000)
-//           By: Joseph
-//     Update #: 25
+// Last-Updated: Nov 24 2023
+//           By: Adam Lambert
+//     Update #: 26
 // URL: 
 // Doc URL: 
 // Keywords: 
@@ -50,6 +50,19 @@
 #include <limits>
 #include <omp.h>
 
+/*! \file saxpy.cpp
+    \brief Completes saxpy calculations as described in the README and returns the time taken to complete
+    the calculations 
+*/
+
+/*! \fn void saxpy(unsigned long n, float a,float y[], float x[])
+    \brief Add all values of float array y to float a multiplied by the elements of float array x n times
+
+    \param n unsigned long that dictates the amount of times the for loop should be run
+    \param a float that is multiplied by the elements of the float array x
+    \param y float array that is added to the result of float a multiplied by the elements of the float array x
+    \param x float array that is multiplied by float a
+*/
 void saxpy(unsigned long n, float a,float y[], float x[])
 {
 #pragma omp parallel for
