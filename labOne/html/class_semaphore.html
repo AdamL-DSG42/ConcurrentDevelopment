@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Lab One: Semaphore Class Reference</title>
+<title>labOne: Semaphore Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,10 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Lab One
-   &#160;<span id="projectnumber">v0.1</span>
+   <div id="projectname">labOne
    </div>
-   <div id="projectbrief">Concurrent Development Lab One implementation of semaphore and mutex in C++</div>
   </td>
  </tr>
  </tbody>
@@ -78,14 +76,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0d9290d316636875ca85d1d78950a817"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_semaphore.html#a0d9290d316636875ca85d1d78950a817">Semaphore</a> (unsigned int uiCount=0)</td></tr>
+<tr class="memitem:a0d9290d316636875ca85d1d78950a817"><td class="memItemLeft" align="right" valign="top"><a id="a0d9290d316636875ca85d1d78950a817"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Semaphore</b> (unsigned int uiCount=0)</td></tr>
 <tr class="separator:a0d9290d316636875ca85d1d78950a817"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72aabebf026e3a8b1f3e4d0fa8ee1eda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_semaphore.html#a72aabebf026e3a8b1f3e4d0fa8ee1eda">Wait</a> ()</td></tr>
+<tr class="memitem:a72aabebf026e3a8b1f3e4d0fa8ee1eda"><td class="memItemLeft" align="right" valign="top"><a id="a72aabebf026e3a8b1f3e4d0fa8ee1eda"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Wait</b> ()</td></tr>
 <tr class="separator:a72aabebf026e3a8b1f3e4d0fa8ee1eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f700173ae86ae623684109066e07656"><td class="memTemplParams" colspan="2">template&lt;typename R , typename P &gt; </td></tr>
-<tr class="memitem:a7f700173ae86ae623684109066e07656"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_semaphore.html#a7f700173ae86ae623684109066e07656">Wait</a> (const std::chrono::duration&lt; R, P &gt; &amp;crRelTime)</td></tr>
+<tr class="memitem:a7f700173ae86ae623684109066e07656"><td class="memTemplParams" colspan="2"><a id="a7f700173ae86ae623684109066e07656"></a>
+template&lt;typename R , typename P &gt; </td></tr>
+<tr class="memitem:a7f700173ae86ae623684109066e07656"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Wait</b> (const std::chrono::duration&lt; R, P &gt; &amp;crRelTime)</td></tr>
 <tr class="separator:a7f700173ae86ae623684109066e07656"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f92f738b4486439b296d8e235895f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_semaphore.html#a86f92f738b4486439b296d8e235895f2">Signal</a> ()</td></tr>
+<tr class="memitem:a86f92f738b4486439b296d8e235895f2"><td class="memItemLeft" align="right" valign="top"><a id="a86f92f738b4486439b296d8e235895f2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Signal</b> ()</td></tr>
 <tr class="separator:a86f92f738b4486439b296d8e235895f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -93,97 +95,7 @@ Public Member Functions</h2></td></tr>
 <p>Uses C++11 features such as mutex and condition variables to implement <a class="el" href="class_semaphore.html" title="A Semaphore Implementation.">Semaphore</a> </p>
 
 <p class="definition">Definition at line <a class="el" href="_semaphore_8h_source.html#l00014">14</a> of file <a class="el" href="_semaphore_8h_source.html">Semaphore.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0d9290d316636875ca85d1d78950a817"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d9290d316636875ca85d1d78950a817">&#9670;&nbsp;</a></span>Semaphore()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Semaphore::Semaphore </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>uiCount</em> = <code>0</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_semaphore_8h_source.html#l00022">22</a> of file <a class="el" href="_semaphore_8h_source.html">Semaphore.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a86f92f738b4486439b296d8e235895f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86f92f738b4486439b296d8e235895f2">&#9670;&nbsp;</a></span>Signal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Semaphore::Signal </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_semaphore_8cpp_source.html#l00030">30</a> of file <a class="el" href="_semaphore_8cpp_source.html">Semaphore.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a72aabebf026e3a8b1f3e4d0fa8ee1eda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72aabebf026e3a8b1f3e4d0fa8ee1eda">&#9670;&nbsp;</a></span>Wait() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Semaphore::Wait </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_semaphore_8cpp_source.html#l00012">12</a> of file <a class="el" href="_semaphore_8cpp_source.html">Semaphore.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a7f700173ae86ae623684109066e07656"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f700173ae86ae623684109066e07656">&#9670;&nbsp;</a></span>Wait() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename R , typename P &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Semaphore::Wait </td>
-          <td>(</td>
-          <td class="paramtype">const std::chrono::duration&lt; R, P &gt; &amp;&#160;</td>
-          <td class="paramname"><em>crRelTime</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_semaphore_8cpp_source.html#l00020">20</a> of file <a class="el" href="_semaphore_8cpp_source.html">Semaphore.cpp</a>.</p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="_semaphore_8h_source.html">Semaphore.h</a></li>
 <li><a class="el" href="_semaphore_8cpp_source.html">Semaphore.cpp</a></li>
 </ul>

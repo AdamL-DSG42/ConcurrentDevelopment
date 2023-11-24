@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['semaphore_19',['Semaphore',['../class_semaphore.html#a0d9290d316636875ca85d1d78950a817',1,'Semaphore']]],
-  ['signal_20',['Signal',['../class_semaphore.html#a86f92f738b4486439b296d8e235895f2',1,'Semaphore']]]
+  ['taskone_15',['taskOne',['../hello_threads_8cpp.html#a2b4729d561c345111ccab970fe11e229',1,'helloThreads.cpp']]],
+  ['tasktwo_16',['taskTwo',['../hello_threads_8cpp.html#ae4ea9570be601d182fa473c7ca431852',1,'helloThreads.cpp']]]
 ];
