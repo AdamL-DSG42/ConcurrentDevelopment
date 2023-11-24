@@ -7,9 +7,9 @@
 // Created: Mon Feb  4 10:10:27 2019 (+0000)
 // Version: 
 // Package-Requires: ()
-// Last-Updated: Fri Feb  8 10:14:29 2019 (+0000)
-//           By: Joseph Kehoe
-//     Update #: 40
+// Last-Updated: 24 Nov 2023
+//           By: Adam Lambert
+//     Update #: 41
 // URL: 
 // Doc URL: 
 // Keywords: 
@@ -43,9 +43,30 @@
 // 
 // 
 
+/*! \mainpage Concurrency Lab Six Stencil
+ *
+ * \section Description
+ *
+ * Completed version of Lab Six Stencil.
+ *
+ * Demonstrates parallelised summing of two separate vectors
+ *
+ * \section p How to Run
+ *
+ *  stencil.cpp:
+ *
+ *  Compiled using g++, run make -k to create
+ *
+ *  Run ./stencil.out to run the program
+ *
+ */
+
 // Code:
 
-
+/*! \file stencil.cpp
+    \brief Demonstrates parallelised summing of two separate vectors, similar to the map function but
+    also includes the current values neighbours in the concurrent function
+*/
 
 #include <iostream>
 #include <stdlib.h>     /* srand, rand */
@@ -61,6 +82,13 @@ using namespace std ;
 const int DIM=1000;
 const int SIZE=4;
 
+/*! \fn int calcNeighbours(vector<float> const  &in, int index, vector<float>& out)
+    \brief Puts the neighbours of the elements of the first vector into the second vector
+
+    \param in float vector containing the initial values
+    \param index integer containing location of initial value
+    \param out float vector that stores the neighbours of the element in the in vector
+*/
 int calcNeighbours(vector<float> const  &in, int index, vector<float>& out){
   int amount=out.size();
   for(int i=0;i<out.size();++i){//put neighbours of in[i] into out vector
@@ -75,6 +103,15 @@ int calcNeighbours(vector<float> const  &in, int index, vector<float>& out){
   return 1;
 }
 
+/*! \fn void stencil(vector<float> const &in, vector<float> &out,
+	     function <float(vector<float>) > f,int size)
+    \brief Sums the neighbour of each element of the first vector and stores the result in the second vector
+
+    \param in float vector containing the initial values
+    \param out float vector that stores the sum of the neighbours of the element in the in vector
+    \param f stores the getNewValue function
+    \param size Dictates the size of the neighbour vector, 4 indicates a Von Nueman neighbourhood
+*/
 void stencil(vector<float> const &in, vector<float> &out,
 	     function <float(vector<float>) > f,int size){
 #pragma openmp parallel for
@@ -87,7 +124,11 @@ void stencil(vector<float> const &in, vector<float> &out,
 
 
 
+/*! \fn float getNewValue(vector<float> currentValues)
+    \brief Sums the vector of neighbours of each element returned in the stencil function
 
+    \param currentValues vector of the element of the initial vector's neighbours
+*/
 float getNewValue(vector<float> currentValues){
   float average=0.0;
   float total=0.0;
