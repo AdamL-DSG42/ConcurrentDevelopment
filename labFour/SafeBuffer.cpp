@@ -46,28 +46,33 @@
 
 #include "SafeBuffer.h"
 
-SafeBuffer::SafeBuffer(){
+template <class T>
+SafeBuffer<T>::SafeBuffer(){
 
   bufferLimit = 0;
 
 }
 
-SafeBuffer::~SafeBuffer(){
-
-}
-
-SafeBuffer::SafeBuffer(int size){
+template <class T>
+SafeBuffer<T>::SafeBuffer(int size){
 
   bufferLimit = size;
   *bufferSize = 0;
   
 }
 
-void SafeBuffer::Get(){
+template <class T>
+SafeBuffer<T>::~SafeBuffer(){
+
+}
+
+template <class T>
+void SafeBuffer<T>::Get(){
 
   itemsSem->Wait();
   mutexSem->Wait();
-  std::shared_ptr<Event> e= buffer.pop();
+  T e= buffer.front();
+  buffer.pop();
   --*bufferSize;
   mutexSem->Signal();
   spacesSem->Signal();
@@ -75,14 +80,15 @@ void SafeBuffer::Get(){
 
 }
 
-void SafeBuffer::Put(int i){
+template <class T>
+void SafeBuffer<T>::Put(int i){
 
   if (*bufferSize < bufferLimit) {
-    std::shared_ptr<Event> e= std::make_shared<Event>(i);
     spacesSem->Wait();
     mutexSem->Wait();
+    std::shared_ptr<Event> e= std::make_shared<Event>(i);
     buffer.push(e);
-    ++bufferSize;
+    ++*bufferSize;
     mutexSem->Signal();
     itemsSem->Signal();
   }

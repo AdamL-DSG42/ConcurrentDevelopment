@@ -49,12 +49,12 @@
 #include <stdio.h>
 #include <queue>
 
+template <class T>
 class SafeBuffer
 {
 private:
 
-  // create Array - change to queue if possible
-  std::queue<std::shared_ptr<Event>> buffer;
+  std::queue<T> buffer;
   std::shared_ptr<Semaphore> mutexSem;
   std::shared_ptr<Semaphore> itemsSem;
   std::shared_ptr<Semaphore> spacesSem;

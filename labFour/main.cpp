@@ -4,6 +4,26 @@
 #include <thread>
 #include <vector>
 
+/*! \mainpage Concurrency Lab Four
+ *
+ * \section Description
+ *
+ * Completed version of Lab Five.
+ *
+ * Demonstrates a solution to the Producer-Consumer problem
+ *
+ * Does not currently compile
+ *
+ * \section p How to Run
+ *
+ *  main.cpp:
+ *
+ *  Compiled using g++, run make -k to create (does not currently work)
+ *
+ *  Run ./safeBuffer to run the program
+ *
+ */
+
 
 static const int num_threads = 100;
 const int size=20;
@@ -13,10 +33,9 @@ const int size=20;
     \brief Creates events and adds them to buffer
 */
 
-void producer(std::shared_ptr<SafeBuffer<std::shared_ptr Event>> theBuffer, int numLoops){
+void producer(std::shared_ptr<SafeBuffer<std::shared_ptr<Event>>> theBuffer, int numLoops){
 
   for(int i=0;i<numLoops;++i){
-    //Produce event and add to buffer
     theBuffer->Put(i);
   }
   
@@ -26,7 +45,7 @@ void producer(std::shared_ptr<SafeBuffer<std::shared_ptr Event>> theBuffer, int 
     \brief Takes events from buffer and consumes them
 */
 
-void consumer(std::shared_ptr<SafeBuffer<std::shared_ptr Event>> theBuffer, int numLoops){
+void consumer(std::shared_ptr<SafeBuffer<std::shared_ptr<Event>>> theBuffer, int numLoops){
 
   for(int i=0;i<numLoops;++i){
     theBuffer->Get();
@@ -37,16 +56,19 @@ void consumer(std::shared_ptr<SafeBuffer<std::shared_ptr Event>> theBuffer, int 
 int main(void){
 
   std::vector<std::thread> vt(num_threads);
-  std::shared_ptr<SafeBuffer<std::shared_ptr<Event>>> aBuffer( new SafeBuffer<shared_ptr<Event>>(size));
+  std::shared_ptr<SafeBuffer<std::shared_ptr<Event>>> aBuffer( new SafeBuffer<std::shared_ptr<Event>>(size));
   /**< Launch the threads  */
   int i=0;
-  for(std::thread& t: vt){
-    t=std::thread(updateTask,aBuffer,10);
+  while(i < 20){
+    vt[i] = std::thread(producer,aBuffer,10);
+    ++i;
+  }
+  while(i < num_threads){
+    vt[i] = std::thread(consumer,aBuffer,10);
   }
   /**< Join the threads with the main thread */
   for (auto& v :vt){
       v.join();
   }
-  std::cout << sharedVariable << std::endl;
   return 0;
 }
