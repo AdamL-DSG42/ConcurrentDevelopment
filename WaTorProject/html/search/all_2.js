@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['main_4',['main',['../simulation_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'simulation.cpp']]],
-  ['movereset_5',['moveReset',['../simulation_8cpp.html#ad672ef164a4ba2b9adfb0b89882bc336',1,'simulation.cpp']]]
+  ['getemptyneighbours_2',['getEmptyNeighbours',['../simulation_8cpp.html#a658faddfb6b54256536fe6b03c363c8a',1,'simulation.cpp']]],
+  ['getfishneighbours_3',['getFishNeighbours',['../simulation_8cpp.html#a668d8673697ceaf6eb8485b24d58ee8e',1,'simulation.cpp']]],
+  ['gridsize_4',['gridSize',['../simulation_8cpp.html#a45051af9a546ac7f20e0aa9d5bf0d0b0',1,'simulation.cpp']]]
 ];

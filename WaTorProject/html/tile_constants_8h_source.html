@@ -97,18 +97,26 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">// Define the size of the wa-tor grid and the window size </span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> xdim = 100; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> ydim = 100;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> WindowXSize = 1600;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> WindowYSize = 1400;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">// Define the values associated with each tile on the wa-tor grid</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> water = 0;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> fish = 1;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> shark = 2;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">const</span> <span class="keywordtype">float</span> chronon = 0.1f;</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="tile_constants_8h.html#aea75dd10e09d2d3eb69ed47e48cf81dc">   39</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="tile_constants_8h.html#aea75dd10e09d2d3eb69ed47e48cf81dc">xdim</a> = 1000; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> ydim = 1000;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> WindowXSize = 1600;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="tile_constants_8h.html#accf8a62be256e8e1d7f915d79e218e6f">   42</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="tile_constants_8h.html#accf8a62be256e8e1d7f915d79e218e6f">WindowYSize</a> = 1400;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> water = 0;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> fish = 1;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="tile_constants_8h.html#a477ce914b3c34256cc2f610d96b58150">   48</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="tile_constants_8h.html#a477ce914b3c34256cc2f610d96b58150">shark</a> = 2;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> testFishPop = 30000;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> testSharkPop = 3000;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> testFishBreed = 3;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> testSharkBreed = 10;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> testSharkStarve = 4;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> testChrononCount = 500;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> num_threads = 16;</div>
+<div class="ttc" id="atile_constants_8h_html_a477ce914b3c34256cc2f610d96b58150"><div class="ttname"><a href="tile_constants_8h.html#a477ce914b3c34256cc2f610d96b58150">shark</a></div><div class="ttdeci">const int shark</div><div class="ttdef"><b>Definition:</b> <a href="tile_constants_8h_source.html#l00048">tileConstants.h:48</a></div></div>
+<div class="ttc" id="atile_constants_8h_html_accf8a62be256e8e1d7f915d79e218e6f"><div class="ttname"><a href="tile_constants_8h.html#accf8a62be256e8e1d7f915d79e218e6f">WindowYSize</a></div><div class="ttdeci">const int WindowYSize</div><div class="ttdef"><b>Definition:</b> <a href="tile_constants_8h_source.html#l00042">tileConstants.h:42</a></div></div>
+<div class="ttc" id="atile_constants_8h_html_aea75dd10e09d2d3eb69ed47e48cf81dc"><div class="ttname"><a href="tile_constants_8h.html#aea75dd10e09d2d3eb69ed47e48cf81dc">xdim</a></div><div class="ttdeci">const int xdim</div><div class="ttdef"><b>Definition:</b> <a href="tile_constants_8h_source.html#l00039">tileConstants.h:39</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

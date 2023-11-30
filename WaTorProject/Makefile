@@ -4,7 +4,7 @@ CXX = g++
 CPPFILES=simulation.cpp
 HFILES=tileConstants.h
 OBJFILES=simulation.o
-CPPFLAGS=-std=c++11 -I. -Wall
+CPPFLAGS=-std=c++11 -I. -Wall -fopenmp
 LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system -fopenmp
 EXE=watorSimulation
 

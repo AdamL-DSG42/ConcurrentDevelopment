@@ -1,0 +1,109 @@
+Tests with 1 thread:
+Chronon amount: 500; Thread Count: 1; Execution Time: 63.276478 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 59.333477 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 59.922108 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 61.048109 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 61.370325 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 64.003570 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 60.466899 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 60.743967 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 59.773087 seconds
+
+Chronon amount: 500; Thread Count: 1; Execution Time: 59.654452 seconds
+
+
+Tests with 2 threads:
+Chronon amount: 500; Thread Count: 2; Execution Time: 43.935010 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 41.033813 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 40.091455 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 41.120190 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 40.567419 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 40.725110 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 41.317072 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 40.647178 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 40.567044 seconds
+
+Chronon amount: 500; Thread Count: 2; Execution Time: 41.154363 seconds
+
+
+Tests with 4 threads:
+Chronon amount: 500; Thread Count: 4; Execution Time: 31.697651 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 32.939508 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 32.913935 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 32.055303 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 31.677157 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 32.769887 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 31.765002 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 31.933011 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 33.507065 seconds
+
+Chronon amount: 500; Thread Count: 4; Execution Time: 32.612889 seconds
+
+
+Tests with 8 threads:
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.392563 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.061277 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.761723 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.780755 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.460433 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.216465 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.853231 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.695638 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 36.728441 seconds
+
+Chronon amount: 500; Thread Count: 8; Execution Time: 37.002510 seconds
+
+
+Tests with 16 threads:
+Chronon amount: 500; Thread Count: 16; Execution Time: 38.502207 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 37.564956 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 38.157320 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 37.728484 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 37.407232 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 37.584547 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 37.693827 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 37.518832 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 37.633723 seconds
+
+Chronon amount: 500; Thread Count: 16; Execution Time: 38.328145 seconds
+

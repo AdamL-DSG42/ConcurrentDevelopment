@@ -38,3 +38,6 @@ Displays the created ecosystem simulation and how it progresses using SFML
 3. simulation.o - Object file of the simulation.cpp file
 4. tileConstants.h - Contains constant values implemented by the simulation.cpp file for testing purposes
 5. watorSimulation - Executable file for the simulation.cpp file
+6. Speed-Up-Test-Results.txt - Text file containing the results of speed-up benchmark tests completed
+7. speedUpGraph.py - Python script that generates the speed-up graph from the results of the benchmark test
+8. Wa-Tor Speed-up Report.odt - Open Document Format file that contains a report on the findings from the speed-up benchmark tests completed on the concurrent version of the Wa-Tor project

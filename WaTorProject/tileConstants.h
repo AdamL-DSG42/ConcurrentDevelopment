@@ -34,15 +34,24 @@
 
 #pragma once
 
-// Define the size of the wa-tor grid and the window size 
-const int xdim = 100; 
-const int ydim = 100;
+/**< Define the size of the wa-tor grid and the window size */
+
+const int xdim = 1000; 
+const int ydim = 1000;
 const int WindowXSize = 1600;
 const int WindowYSize = 1400;
 
-// Define the values associated with each tile on the wa-tor grid
+
+/**< Define the values associated with each tile on the wa-tor grid */
 const int water = 0;
 const int fish = 1;
 const int shark = 2;
 
-const float chronon = 0.1f;
+/**< Define values used for speed-up benchmark testing */
+const int testFishPop = 30000;
+const int testSharkPop = 3000;
+const int testFishBreed = 3;
+const int testSharkBreed = 10;
+const int testSharkStarve = 4;
+const int testChrononCount = 500;
+const int num_threads = 16;

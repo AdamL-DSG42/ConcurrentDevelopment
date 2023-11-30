@@ -40,6 +40,8 @@
  *
  *  simulation.cpp:
  *
+ *  Choose whether to run the graphical display or speed-up benchmark on line 477
+ *
  *  Compiled using g++, run make -k to create
  *
  *  Run ./watorSimulation to run the program
@@ -54,7 +56,9 @@
 */
 
 #include <SFML/Graphics.hpp>
+#include <fstream>
 #include <iostream>
+#include <string>
 #include <stdio.h>
 #include <unistd.h>
 #include <algorithm>
@@ -66,8 +70,16 @@
 
 /**< Create global variables of the simulation grids' size and each cells' size */
 const int gridSize = xdim*ydim;
-int cellXSize = WindowXSize/xdim;
-int cellYSize = WindowYSize/ydim;
+const int cellXSize = WindowXSize/xdim;
+const int cellYSize = WindowYSize/ydim;
+
+/**< Create global variables of testing variables to be used in the simulation */
+const int fishPop = testFishPop;
+const int sharkPop = testSharkPop;
+const int fishBreed = testFishBreed;
+const int sharkBreed = testSharkBreed;
+const int sharkStarve = testSharkStarve;
+const int totalChrononCount = testChrononCount;
 
 /*! \struct Tile
     \brief Struct containing the required attributes of each grid tile, updated to contain fish, shark or 
@@ -219,7 +231,6 @@ void sharkUpdate(int row, int col){
     getFishNeighbours(row, col, fishNeighbours);
     std::vector<std::pair<int, int>> emptyNeighbours;
     getEmptyNeighbours(row, col, emptyNeighbours);
-    worldData[row][col].breedTime++;
     worldData[row][col].starveTime++;
     if(fishNeighbours.size() > 0){
       Tile moveTile = worldData[row][col];
@@ -236,6 +247,7 @@ void sharkUpdate(int row, int col){
       else{
         worldData[row][col].type = water;
         worldData[row][col].creatureColour = sf::Color::Blue;
+        worldData[chosenTile.first][chosenTile.second].breedTime++;
       }
     }
     else if(emptyNeighbours.size() > 0){
@@ -243,7 +255,7 @@ void sharkUpdate(int row, int col){
       int randChoice = rand() % emptyNeighbours.size();
       std::pair<int, int> chosenTile = emptyNeighbours[randChoice];
       worldData[chosenTile.first][chosenTile.second] = moveTile;
-      worldData[chosenTile.first][chosenTile.second].breedTime++;
+      //worldData[chosenTile.first][chosenTile.second].breedTime++;
       worldData[chosenTile.first][chosenTile.second].alreadyMoved = true;
       if(worldData[row][col].breedTime >= worldData[row][col].breedOccur){
         worldData[row][col].type = shark;
@@ -276,65 +288,11 @@ void updateTile(int row, int col){
   }
 }
 
-/*! \fn void updateGrid(sf::Clock clock)
-    \brief Function to update the worldData grid each chronon and update the visual simulation based on the
-    changes that occur
+/*! \fn void runGraphicDisplay()
+    \brief Function to display the graphical rendition of the Wa-Tor simulation
 */
-void updateGrid(sf::Clock clock){
-  if(clock.getElapsedTime().asSeconds() >= chronon) {
-    for(int i = 0; i < xdim; ++i){
-      for(int k = 0; k < ydim; ++k){
-        if(worldData[i][k].type != water){
-          updateTile(i, k);
-        }
-      }
-    }
-    clock.restart();
-  }
-
-  moveReset();  
-
-  // Set colours of tiles to the appropriate colour based on whether it is a fish, shark or water
-  for(int i = 0; i < xdim; ++i){
-    for(int k = 0; k < ydim; ++k){
-      watorArray[i][k].setFillColor(worldData[i][k].creatureColour);
-    }
-  }
-}
-
-int main(){
-  int gridTotal = 0;
-  int fishPop = 3000;
-  int sharkPop = 300;
-
-  /**< Populate grid with fish, shark and water tiles */
-  for(int i = 0; i < xdim; ++i){
-    for(int k = 0; k < ydim; ++k){
-      if(gridTotal < fishPop){
-        worldData[i][k].type = fish;
-        worldData[i][k].breedOccur = 3;
-        worldData[i][k].creatureColour = sf::Color::Green;
-      }
-      else if(gridTotal < fishPop+sharkPop){
-        worldData[i][k].type = shark;
-        worldData[i][k].breedOccur = 10;
-        worldData[i][k].starveDeath = 3;
-        worldData[i][k].creatureColour = sf::Color::Red;
-      }
-      else {
-        worldData[i][k].type = water;
-        worldData[i][k].creatureColour = sf::Color::Blue;
-      }
-      gridTotal++;
-    }
-  }
-
-  /**< Flatten the 2D array and shuffle all of the tiles to randomly place fish and sharks */
-  srand (time(NULL)); 
-  Tile *oneDimArray = &worldData[0][0];
-  shuffle(oneDimArray, xdim, ydim);
-
-  /**< Set colours of tiles to the appropriate colour based on whether it is a fish, shark or water */
+void runGraphicDisplay(){
+  /**< Initially set colours of tiles to the appropriate colour based on whether it is a fish, shark or water */
   for(int i = 0; i < xdim; ++i){
     for(int k = 0; k < ydim; ++k){
       watorArray[i][k].setSize(sf::Vector2f(cellXSize,cellYSize));
@@ -344,9 +302,11 @@ int main(){
   }
 
   sf::RenderWindow window(sf::VideoMode(WindowXSize,WindowYSize), "SFML Wa-Tor world");
-  sf::Clock clock;
 
-  while (window.isOpen())
+  int chrononCount = 0;
+  int fishCount = 0;
+  int sharkCount = 0;
+  while (chrononCount < totalChrononCount)
   {
     sf::Event event;
     while (window.pollEvent(event))
@@ -355,22 +315,45 @@ int main(){
             window.close();
     }
 
-    //updateGrid();
-
-    if(clock.getElapsedTime().asSeconds() >= chronon) {
-      for(int i = 0; i < xdim; ++i){
-        for(int k = 0; k < ydim; ++k){
-          if(worldData[i][k].type != water){
-            updateTile(i, k);
-          }
+    /**< Parallelise the updating of the grid tiles  */
+    int threadCount = num_threads;
+    #pragma omp parallel num_threads(num_threads) 
+    {
+      int gridSize = (ydim/threadCount);
+      int threadID = omp_get_thread_num();
+      int start = threadID * gridSize;
+      int end = start + gridSize;
+      if(threadID == threadCount - 1){end = ydim;}
+      for(int i = start+1; i < end; ++i){
+        for(int k = 0; k < xdim; ++k){
+          updateTile(k,i);
         }
       }
-      clock.restart();
+      /**< Wait for every thread to reach this point before completing the rows shared by each tile */
+      #pragma omp barrier
+      for(int i = 0; i < xdim; ++i){
+        updateTile(i,start);
+      }
     }
 
     moveReset();  
 
-    /**< Set colours of tiles to the appropriate colour based on whether it is a fish, shark or water */
+    for(int i = 0; i < xdim; ++i){
+      for(int k = 0; k < ydim; ++k){
+        if(worldData[i][k].type == 1){
+          fishCount++;
+        }
+        else if(worldData[i][k].type == 2){
+          sharkCount++;
+        }
+      }
+    }
+    printf("Fish Count: %d\n", fishCount);
+    printf("Shark Count: %d\n", sharkCount);
+    fishCount = 0;
+    sharkCount = 0;
+
+    /**< Reset colours of tiles to the appropriate colour based on new occupant */
     for(int i = 0; i < xdim; ++i){
       for(int k = 0; k < ydim; ++k){
         watorArray[i][k].setFillColor(worldData[i][k].creatureColour);
@@ -385,36 +368,117 @@ int main(){
     }
 
     window.display();
+
+    chrononCount++;
   }
+}
+
+/*! \fn void runSpeedupBenchmark()
+    \brief Function to run a speed-up benchmark of the Wa-Tor simulation without a graphical display
+*/
+void runSpeedupBenchmark(){
+  int chrononCount = 0;
+  int fishCount = 0;
+  int sharkCount = 0;
+  double startTime = omp_get_wtime();
+  while (chrononCount < totalChrononCount)
+  {
+    /**< Parallelise the updating of the grid tiles  */
+    int threadCount = num_threads;
+    #pragma omp parallel num_threads(num_threads) 
+    {
+      int gridSize = (ydim/threadCount);
+      int threadID = omp_get_thread_num();
+      int start = threadID * gridSize;
+      int end = start + gridSize;
+      if(threadID == threadCount - 1){end = ydim;}
+      for(int i = start+1; i < end; ++i){
+        for(int k = 0; k < xdim; ++k){
+          updateTile(k,i);
+        }
+      }
+      /**< Wait for every thread to reach this point before completing the rows shared by each tile */
+      #pragma omp barrier
+      for(int i = 0; i < xdim; ++i){
+        updateTile(i,start);
+      }
+    }
+
+    moveReset();  
+
+    for(int i = 0; i < xdim; ++i){
+      for(int k = 0; k < ydim; ++k){
+        if(worldData[i][k].type == 1){
+          fishCount++;
+        }
+        else if(worldData[i][k].type == 2){
+          sharkCount++;
+        }
+      }
+    }
+    printf("Fish Count: %d\n", fishCount);
+    printf("Shark Count: %d\n", sharkCount);
+    fishCount = 0;
+    sharkCount = 0;
+
+    chrononCount++;
+  }
+
+  double endTime = omp_get_wtime();
+
+  printf("Total Execution Time: %f seconds\n",endTime-startTime);
+
+  /**< Write the results of each speed-up test to a text file */
+  std::ofstream of;
+
+  of.open("Speed-Up-Test-Results.txt", std::ios::app);
+  if (!of)
+    std::cout << "File not found";
+  else {
+    std::string results = "Chronon amount: " + std::to_string(totalChrononCount) + "; Thread Count: " + std::to_string(num_threads) + "; Execution Time: " + std::to_string(endTime-startTime) + " seconds\n\n";
+    of << results;
+    std::cout << "Data successfully added.\n";
+    of.close();
+  }
+}
+
+int main(){
+
+  int gridTotal = 0;
+
+  /**< Populate grid with fish, shark and water tiles */
+  for(int i = 0; i < xdim; ++i){
+    for(int k = 0; k < ydim; ++k){
+      if(gridTotal < fishPop){
+        worldData[i][k].type = fish;
+        worldData[i][k].breedOccur = fishBreed;
+        worldData[i][k].creatureColour = sf::Color::Green;
+      }
+      else if(gridTotal < fishPop+sharkPop){
+        worldData[i][k].type = shark;
+        worldData[i][k].breedOccur = sharkBreed;
+        worldData[i][k].starveDeath = sharkStarve;
+        worldData[i][k].creatureColour = sf::Color::Red;
+      }
+      else {
+        worldData[i][k].type = water;
+        worldData[i][k].creatureColour = sf::Color::Blue;
+      }
+      gridTotal++;
+    }
+  }
+
+  /**< Flatten the 2D array and shuffle all of the tiles to randomly place fish and sharks */
+  srand (1000); 
+  Tile *oneDimArray = &worldData[0][0];
+  shuffle(oneDimArray, xdim, ydim);
+
+  /**< Call functions to either display graphical rendition of Wa-Tor simulation or run speed-up benchmark */
+  //runGraphicDisplay();
+  runSpeedupBenchmark();
 
   return 0;
 }
 
 // 
 // simulation.cpp ends here
-
-/*
-  Parallelisation to be implemented
-
-  updateGrid(); // put task in function
-  1. Get thread count: int thread_count = get_thread_count;
-  2. Size of each grid: rows / total thread count, may not go evenly, give remainder to last grid
-  int thread_id = get_thread_id;
-
-  #pragma omp parallel
-  {
-    int threadCount = omp_get_thread_count();
-    int gridSize = row/threadCount;
-    int start = threadID * threadRowCount;
-    if(threadID == threadCount - 1){end = rowCount};
-    int end = start + threadRowCount;
-    for(int i = start; i < end; ++i) {
-      for(int k = 0; k < cols; ++k) {
-        updateGrid();
-      }
-    }
-
-    to deal with locks, three for loops, each one shares locks.
-    Lock adjacent tiles.
-  }
-*/
